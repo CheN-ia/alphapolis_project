@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('episodes', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('text');
-            $table->string('image');
-            $table->integer('PV');
             $table->foreignId('novel_id');
+            $table->foreignId('user_id');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('episodes');
+        Schema::dropIfExists('comments');
     }
 };
