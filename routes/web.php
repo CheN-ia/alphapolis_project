@@ -47,16 +47,23 @@ Route::middleware('auth')->group(function () {
 
         //ブックマーク一覧
         Route::group(['prefix' => '{user_id}/bm', 'as' => 'Users.'], function() {
+            Route::get('/', [UserController::class, 'bm_show']);
+            Route::delete('{bm_id}', [UserController::class, 'bm_delete']);
+            Route::post('/', [UserController::class, 'bm_store']);
         });
 
         //コメント管理画面
-        Route::group(['prefix' => '{user_id}/bm', 'as' => 'Users.'], function() {
+        Route::group(['prefix' => '{user_id}/comment', 'as' => 'Users.'], function() {
+            Route::get('/', [UserController::class, 'bm_show']);
+            Route::delete('{comment_id}', [UserController::class, 'bm_delete']);
         });
     });
 
-
     //ユーザー設定
-    Route::group(['prefix' => 'user', 'as' => 'Users.'], function() {
+    Route::group(['prefix' => 'user/{user_id}', 'as' => 'Users.'], function() {
+        Route::get('/', [UserController::class, 'work_show']);
+        Route::patch('/', [UserController::class, 'work_update']);
+        Route::post('/', [UserController::class, 'work_store']);
     });
 
 });
