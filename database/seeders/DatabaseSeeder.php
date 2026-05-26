@@ -45,7 +45,13 @@ class DatabaseSeeder extends Seeder
                 $novel->bookmarkingUsers()->attach($users->random(rand(0, 5)));
 
                 // ランダムなユーザーがコメントする（commentsテーブル）
-                $novel->commentingUsers()->attach($users->random(rand(0, 3)));
+                $commenters = $users->random(rand(0, 3));
+                foreach ($commenters as $user) {
+                    $novel->commentingUsers()->attach($user->id, [
+                    // 💡 マイグレーションで定義したカラム名（例: body）に、Fakerで200文字のテキストを入れる
+                        'comment' => fake()->realText(200),
+                    ]);
+                }
             });
     }
 }
