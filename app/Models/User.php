@@ -29,4 +29,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // app/Models/User.php 内
+    public function novels()
+    {
+        // 第2引数に中間テーブル名「works」を指定します
+        return $this->belongsToMany(Novel::class, 'works');
+    }
 }

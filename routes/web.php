@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Route;
 
 //追加コントローラー
 use App\Http\Controllers\NovelController;
-use Illuminate\Queue\Console\UserController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
-use Illuminate\Queue\Console\EpisodeController;
+use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\BookmarkController;
 use Illuminate\Queue\Console\CommentController;
 
@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function () {
     //alphapolis projects 追記（コントローラー名は仮のもの）
     ///
     //トップページ・検索結果・作品一覧・エピソード一覧
-    Route::group(['prefix' => '/novels', 'as' => 'Novels.'], function() {
+    Route::group(['prefix' => 'novels', 'as' => 'Novels.'], function() {
         Route::get('/', [NovelController::class, 'index']);
         Route::get('genre_id={genre_id}&tag_id={tag_id}', [NovelController::class, 'search']);
         Route::get('{novel_id}', [NovelController::class, 'show']);
@@ -37,19 +37,20 @@ Route::middleware('auth')->group(function () {
     });
 
     //ユーザー設定
-    Route::group(['prefix' => 'user-settings/{user_id}', 'as' => 'UserSettings.'], function() {
-        Route::get('/', [UserController::class, 'work_show']);
-        Route::patch('/', [UserController::class, 'work_update']);
-        Route::post('/', [UserController::class, 'work_store']);
+    Route::group(['prefix' => 'user-settings', 'as' => 'UserSettings.'], function() {
+        Route::get('{user_id}', [UserController::class, 'user_show']);
+        Route::get('{user_id}/edit', [UserController::class, 'user_edit']);
+        Route::patch('{user_id}', [UserController::class, 'user_update']);
     });
 
     //ユーザー管理画面
-    Route::group(['prefix' => '{user_id}', 'as' => 'Users.'], function() {
-        Route::get('/', [UserController::class, 'user_index']);
+    Route::group(['prefix' => 'user/{user_id}', 'as' => 'Users.'], function() {
+        Route::get('/', [UserController::class, 'user_index'])->name('mypage');
 
         //作品投稿編集
+        Route::get('index', [WorkController::class, 'work_index']);
         Route::get('create', [WorkController::class, 'work_create']);
-        Route::post('/', [WorkController::class, 'work_store']);
+        Route::post('index', [WorkController::class, 'work_store']);
         Route::get('{novel_id}', [WorkController::class, 'work_show']);
         Route::delete('{novel_id}', [WorkController::class, 'work_delete']);
         Route::patch('{novel_id}', [WorkController::class, 'work_update']);

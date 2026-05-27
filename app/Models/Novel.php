@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Novel extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+    //use SoftDeletes;
 
     protected $fillable = ['title', 'abstract', 'genre_id'];
 
