@@ -39,6 +39,7 @@ class User extends Authenticatable
     {
         // 第2引数に中間テーブル名「works」を指定します
         return $this->belongsToMany(Novel::class,'bookmarks');
+    }
     // ユーザーが作成した小説一覧を取得するリレーション
     public function novels(): BelongsToMany
     {
