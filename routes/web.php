@@ -10,7 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\BookmarkController;
-use Illuminate\Queue\Console\CommentController;
+use App\Http\Controllers\CommentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -69,13 +69,13 @@ Route::middleware('auth')->group(function () {
         Route::patch('{novel_id}', [WorkController::class, 'work_update']);
         Route::get('{novel_id}/edit', [WorkController::class, 'work_edit']);
 
-        //エピソード投稿編集
-        Route::get('{novel_id}/create', [EpisodeController::class, 'episode_create']);
-        Route::post('{novel_id}', [EpisodeController::class, 'episode_store']);
-        Route::get('{novel_id}/{episode_id}', [EpisodeController::class, 'episode_show']);
-        Route::delete('{novel_id}/edit/{episode_id}', [EpisodeController::class, 'work_delete']);
-        Route::patch('{novel_id}/{episode_id}', [EpisodeController::class, 'work_update']);
-        Route::get('{novel_id}/{episode_id}', [EpisodeController::class, 'work_edit']);
+        // エピソード投稿編集
+        Route::get('{novel_id}/create', [EpisodeController::class, 'episode_create'])->name('episode_create');
+        Route::post('{novel_id}', [EpisodeController::class, 'episode_store'])->name('episode_store');
+        Route::get('{novel_id}/{episode_id}', [EpisodeController::class, 'episode_show'])->name('episode_show');
+        Route::delete('{novel_id}/edit/{episode_id}', [EpisodeController::class, 'work_delete'])->name('episode_delete');
+        Route::patch('{novel_id}/{episode_id}', [EpisodeController::class, 'work_update'])->name('episode_update');
+        Route::get('{novel_id}/{episode_id}', [EpisodeController::class, 'work_edit'])->name('episode_edit');
 
     });
 
