@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function () {
     //alphapolis projects 追記（コントローラー名は仮のもの）
     ///
     //トップページ・検索結果・作品一覧・エピソード一覧
-    Route::group(['prefix' => '/novels', 'as' => 'Novels.'], function() {
+    Route::group(['prefix' => 'novels', 'as' => 'Novels.'], function() {
         Route::get('/', [NovelController::class, 'index']);
         Route::get('genre_id={genre_id}&tag_id={tag_id}', [NovelController::class, 'search']);
         Route::get('{novel_id}', [NovelController::class, 'show']);
@@ -37,23 +37,37 @@ Route::middleware('auth')->group(function () {
     });
 
     //ユーザー設定
-    Route::group(['prefix' => 'user-settings/{user_id}', 'as' => 'UserSettings.'], function() {
-        Route::get('/', [UserController::class, 'work_show']);
-        Route::patch('/', [UserController::class, 'work_update']);
-        Route::post('/', [UserController::class, 'work_store']);
+    Route::group(['prefix' => 'user-settings', 'as' => 'UserSettings.'], function() {
+        Route::get('{user_id}', [UserController::class, 'user_show']);
+        Route::get('{user_id}/edit', [UserController::class, 'user_edit']);
+        Route::patch('{user_id}', [UserController::class, 'user_update']);
     });
 
-//ユーザー管理画面
-    Route::group(['prefix' => 'user/{user_id}', 'as' => 'users.'], function() {
+    //ユーザー管理画面
+    Route::group(['prefix' => 'user/{user_id}', 'as' => 'Users.'], function() {
+        Route::get('/', [UserController::class, 'user_index'])->name('mypage');
 
-        // 作品投稿編集（※末尾に ->name(...) を追記しました）
-        Route::get('/', [WorkController::class, 'work_index'])->name('work_index'); // users.work_index
-        Route::get('create', [WorkController::class, 'work_create'])->name('work_create'); // users.work_create
-        Route::post('create', [WorkController::class, 'work_store'])->name('work_store'); // users.work_store
-        Route::get('{novel_id}', [WorkController::class, 'work_show'])->name('work_show'); // users.work_show
-        Route::delete('{novel_id}', [WorkController::class, 'work_delete'])->name('work_delete'); // users.work_delete
-        Route::patch('{novel_id}', [WorkController::class, 'work_update'])->name('work_update');
-        Route::get('{novel_id}/edit', [WorkController::class, 'work_edit'])->name('work_edit');
+        //ブックマーク一覧
+        Route::group(['prefix' => 'bm', 'as' => 'Bookmarks.'], function() {
+            Route::get('/', [BookmarkController::class, 'bm_show']);
+            Route::delete('{bm_id}', [BookmarkController::class, 'bm_delete']);
+            Route::post('/', [BookmarkController::class, 'bm_store']);
+        });
+
+        //コメント管理画面
+        Route::group(['prefix' => 'comment', 'as' => 'Comment.'], function() {
+            Route::get('/', [CommentController::class, 'bm_show']);
+            Route::delete('{comment_id}', [CommentController::class, 'bm_delete']);
+        });
+
+        //作品投稿編集
+        Route::get('index', [WorkController::class, 'work_index']);
+        Route::get('create', [WorkController::class, 'work_create']);
+        Route::post('index', [WorkController::class, 'work_store']);
+        Route::get('{novel_id}', [WorkController::class, 'work_show']);
+        Route::delete('{novel_id}', [WorkController::class, 'work_delete']);
+        Route::patch('{novel_id}', [WorkController::class, 'work_update']);
+        Route::get('{novel_id}/edit', [WorkController::class, 'work_edit']);
 
         // エピソード投稿編集
         Route::get('{novel_id}/create', [EpisodeController::class, 'episode_create'])->name('episode_create');
@@ -63,18 +77,6 @@ Route::middleware('auth')->group(function () {
         Route::patch('{novel_id}/{episode_id}', [EpisodeController::class, 'work_update'])->name('episode_update');
         Route::get('{novel_id}/{episode_id}', [EpisodeController::class, 'work_edit'])->name('episode_edit');
 
-        // ブックマーク一覧
-        Route::group(['prefix' => 'bm', 'as' => 'Bookmarks.'], function() {
-            Route::get('/', [BookmarkController::class, 'bm_show'])->name('show');
-            Route::delete('{bm_id}', [BookmarkController::class, 'bm_delete'])->name('delete');
-            Route::post('/', [BookmarkController::class, 'bm_store'])->name('store');
-        });
-
-        // コメント管理画面
-        Route::group(['prefix' => 'comment', 'as' => 'Comment.'], function() {
-            Route::get('/', [CommentController::class, 'bm_show'])->name('show');
-            Route::delete('{comment_id}', [CommentController::class, 'bm_delete'])->name('delete');
-        });
     });
 
 });
