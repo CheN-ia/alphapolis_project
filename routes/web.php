@@ -47,6 +47,19 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'user/{user_id}', 'as' => 'Users.'], function() {
         Route::get('/', [UserController::class, 'user_index'])->name('mypage');
 
+        //ブックマーク一覧
+        Route::group(['prefix' => 'bm', 'as' => 'Bookmarks.'], function() {
+            Route::get('/', [BookmarkController::class, 'bm_show']);
+            Route::delete('{bm_id}', [BookmarkController::class, 'bm_delete']);
+            Route::post('/', [BookmarkController::class, 'bm_store']);
+        });
+
+        //コメント管理画面
+        Route::group(['prefix' => 'comment', 'as' => 'Comment.'], function() {
+            Route::get('/', [CommentController::class, 'bm_show']);
+            Route::delete('{comment_id}', [CommentController::class, 'bm_delete']);
+        });
+
         //作品投稿編集
         Route::get('index', [WorkController::class, 'work_index']);
         Route::get('create', [WorkController::class, 'work_create']);
@@ -64,18 +77,6 @@ Route::middleware('auth')->group(function () {
         Route::patch('{novel_id}/{episode_id}', [EpisodeController::class, 'work_update']);
         Route::get('{novel_id}/{episode_id}', [EpisodeController::class, 'work_edit']);
 
-        //ブックマーク一覧
-        Route::group(['prefix' => 'bm', 'as' => 'Bookmarks.'], function() {
-            Route::get('/', [BookmarkController::class, 'bm_show']);
-            Route::delete('{bm_id}', [BookmarkController::class, 'bm_delete']);
-            Route::post('/', [BookmarkController::class, 'bm_store']);
-        });
-
-        //コメント管理画面
-        Route::group(['prefix' => 'comment', 'as' => 'Comment.'], function() {
-            Route::get('/', [CommentController::class, 'bm_show']);
-            Route::delete('{comment_id}', [CommentController::class, 'bm_delete']);
-        });
     });
 
 });

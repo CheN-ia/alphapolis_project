@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 //使用するモデルの呼び出し
 use App\Models\User;
-use App\Models\Novel;
-use App\Models\Comment;
-use App\Models\Bookmark;
+// use App\Models\Novel;
+// use App\Models\Comment;
+// use App\Models\Bookmark;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,8 +18,7 @@ class UserController extends Controller
     public function user_index($user_id)
     {
         $user = User::findOrFail($user_id);
-        $novels = $user->novels;
-        return view('users.index', compact('user', 'novels'));;
+        return view('users.index', compact('user'));
     }
 
     //

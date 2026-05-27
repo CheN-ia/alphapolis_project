@@ -30,10 +30,12 @@ class User extends Authenticatable
         ];
     }
 
+
+
     // app/Models/User.php 内
-    public function novels()
+    public function bookmarkingNovels()
     {
         // 第2引数に中間テーブル名「works」を指定します
-        return $this->belongsToMany(Novel::class, 'works');
+        return $this->belongsToMany(Novel::class,'bookmarks');
     }
 }
