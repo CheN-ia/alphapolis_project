@@ -44,13 +44,13 @@ Route::middleware('auth')->group(function () {
     });
 
     //ユーザー管理画面
-    Route::group(['prefix' => 'user/{user_id}', 'as' => 'Users.'], function() {
-        Route::get('/', [UserController::class, 'user_index'])->name('mypage');
+    Route::group(['prefix' => 'user/{user_id}', 'as' => 'users.'], function() {
+        Route::get('index', [UserController::class, 'user_index'])->name('mypage');
 
         //ブックマーク一覧
         Route::group(['prefix' => 'bm', 'as' => 'Bookmarks.'], function() {
             Route::get('/', [BookmarkController::class, 'bm_show']);
-            Route::delete('{bm_id}', [BookmarkController::class, 'bm_delete']);
+            Route::delete('delete', [BookmarkController::class, 'bm_delete']);
             Route::post('/', [BookmarkController::class, 'bm_store']);
         });
 
@@ -60,14 +60,15 @@ Route::middleware('auth')->group(function () {
             Route::delete('{comment_id}', [CommentController::class, 'bm_delete']);
         });
 
-        //作品投稿編集
-        Route::get('index', [WorkController::class, 'work_index']);
-        Route::get('create', [WorkController::class, 'work_create']);
-        Route::post('index', [WorkController::class, 'work_store']);
-        Route::get('{novel_id}', [WorkController::class, 'work_show']);
-        Route::delete('{novel_id}', [WorkController::class, 'work_delete']);
-        Route::patch('{novel_id}', [WorkController::class, 'work_update']);
-        Route::get('{novel_id}/edit', [WorkController::class, 'work_edit']);
+         // 作品投稿編集（※末尾に ->name(...) を追記しました）
+        Route::get('/', [WorkController::class, 'work_index'])->name('work_index'); // users.work_index
+        Route::get('create', [WorkController::class, 'work_create'])->name('work_create'); // users.work_create
+        Route::post('create', [WorkController::class, 'work_store'])->name('work_store'); // users.work_store
+        Route::get('{novel_id}', [WorkController::class, 'work_show'])->name('work_show'); // users.work_show
+        Route::delete('{novel_id}', [WorkController::class, 'work_delete'])->name('work_delete'); // users.work_delete
+        Route::patch('{novel_id}', [WorkController::class, 'work_update'])->name('work_update');
+       // Route::get('{novel_id}/edit', [WorkController::class, 'work_edit'])->name('work_edit');
+
 
         // エピソード投稿編集
         Route::get('{novel_id}/create', [EpisodeController::class, 'episode_create'])->name('episode_create');
@@ -76,7 +77,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('{novel_id}/edit/{episode_id}', [EpisodeController::class, 'work_delete'])->name('episode_delete');
         Route::patch('{novel_id}/{episode_id}', [EpisodeController::class, 'work_update'])->name('episode_update');
         Route::get('{novel_id}/{episode_id}', [EpisodeController::class, 'work_edit'])->name('episode_edit');
-
     });
 
 });

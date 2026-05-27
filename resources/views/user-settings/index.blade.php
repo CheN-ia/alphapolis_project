@@ -9,10 +9,10 @@
         ID:{{ $user->id }}
     </div>
     <div>
-        メールアドレス:{{ $user->name }}
+        メールアドレス:{{ $user->email }}
     </div>
     <a href="{{ $user->id }}/edit">プロフィール編集</a>
 </div>
 
-<a href="/user/{{ $user->id }}">マイページに戻る</a>
+<a href="/user/{{ $user->id }}/index">マイページに戻る</a>
 

@@ -7,13 +7,13 @@
 </div>
 <div>
     <h2>投稿作品</h2>
-    <a href="{{ $user->id }}/index">投稿作品一覧へ</a>
+    <a href="/user/{{ $user->id }}/create">投稿作品一覧へ</a>
 </div>
 <div>
     <h2>ブックマーク</h2>
-    <a href="{{ $user->id }}/bm">ブックマーク一覧へ</a>
+    <a href="/user/{{ $user->id }}/bm">ブックマーク一覧へ</a>
 </div>
 <div>
     <h2>投稿コメント</h2>
-    <a href="{{ $user->id }}/comment">コメント一覧へ</a>
+    <a href="/user/{{ $user->id }}/comment">コメント一覧へ</a>
 </div>

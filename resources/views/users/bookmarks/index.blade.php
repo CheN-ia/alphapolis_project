@@ -3,10 +3,11 @@
 @if ($bookmarks->count() > 0)
         {{-- @foreach ディレクティブで、1件ずつ処理 --}}
         @foreach ($bookmarks as $bookmark)
-                <p><a  href="/bookmark/{{ $bookmark->id }}">{{ $bookmark->title }}</a>
-                    <form action="/bookmark/{{ $bookmark->id }}" method="post">
+                <p><a  href="/novels/{{ $bookmark->id }}">{{ $bookmark->title }}</a>
+                    <form action="/user/{{ $user->id }}/bm/delete" method="post">
                     @csrf
                     @method('Delete')
+                        <input type="hidden" id="novel_id" name="novel_id" value="{{ $bookmark->id }}" />
                         <input type="submit" name="delete" value="削除">
                     </form>
                 </p>

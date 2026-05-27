@@ -56,6 +56,6 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect("/user-settings/{$user_id}");
+        return redirect("/user-settings/{$user_id}/index");
     }
 }
