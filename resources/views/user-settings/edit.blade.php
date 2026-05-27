@@ -27,5 +27,5 @@
         <input type="hidden" name="id" value="{{ $user->id }}">
         <div><input type="submit" value="変更の反映"></div>
     </form>
-    <a href="{{ $user->id }}/edit">プロフィール編集</a>
+    <a href="/user/{{ $user->id }}">マイページに戻る</a>
 </div>

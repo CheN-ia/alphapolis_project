@@ -2,8 +2,15 @@
 <p>resources/views/user-setting/index.blade.php</p>
 {{-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
 <div>
-    <h2>{{ $user->name }}</h2>
-    <h2>{{ $user->email }}</h2>
+    <div>
+        名前:{{ $user->name  }}
+    </div>
+    <div>
+        ID:{{ $user->id }}
+    </div>
+    <div>
+        メールアドレス:{{ $user->name }}
+    </div>
     <a href="{{ $user->id }}/edit">プロフィール編集</a>
 </div>
 
