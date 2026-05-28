@@ -16,6 +16,7 @@ class GenreFactory extends Factory
      * @return array<string, mixed>
      */
     protected $model = Genre::class;
+    protected static $index = 0;
 
     public function definition(): array
     {
@@ -27,9 +28,23 @@ class GenreFactory extends Factory
             'ホラー・ミステリー',
             'エッセイ・ノンフィクション',
         ];
+
+        // 現在のインデックスに対応するタグを取得
+        // (もしcountを配列数以上に指定された場合の安全対策として、一巡したら0に戻るように % で剰余算しています)
+        $genre = $genres[self::$index % count($genres)];
+
+        // 次回呼び出しのためにインデックスを進める
+        self::$index++;
+
         return [
-            // リストからランダムに1つ選択（重複を避けたい場合はシーダー側の設計で調整）
-            'genre' => $this->faker->randomElement($genres),
+            'genre' => $genre,
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
+    }
+
+    public static function resetIndex(): void
+    {
+        self::$index = 0;
     }
 }

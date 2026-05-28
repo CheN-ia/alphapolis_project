@@ -29,6 +29,6 @@
         <input type="hidden" name="id" value="{{ $user->id }}">
         <div><input type="submit" value="変更の反映"></div>
     </form>
-     <a href="{{ route('users.user_index', ['user_id' => $user->id]) }}">マイページに戻る</a>
+     <a href="{{ route('users.mypage', ['user_id' => $user->id]) }}">マイページに戻る</a>
 
 </div>

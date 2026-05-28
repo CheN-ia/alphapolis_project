@@ -19,6 +19,6 @@
     <a href="{{ $user->id }}/edit">プロフィール編集</a>
 </div>
 
- <a href="{{ route('users.user_index', ['user_id' => $user->id]) }}">マイページに戻る</a>
+ <a href="{{ route('users.mypage', ['user_id' => $user->id]) }}">マイページに戻る</a>
 
 

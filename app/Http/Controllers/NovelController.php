@@ -14,11 +14,12 @@ class NovelController extends Controller
 {
     public function index(Request $request)
     {
-            // お問い合わせのレコードをすべて取得
+    // お問い合わせのレコードをすべて取得
         $works = Novel::all();
         $user = Auth::user();
                 // ジャンル一覧とタグ一覧を全件取得
         $genres = Genre::all();
+
         $tags = Tag::all();
         $query = Novel::query();
 

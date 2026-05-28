@@ -9,6 +9,8 @@ use App\Models\Episode;
 use App\Models\Genre;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,7 +22,50 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+    // === 【追加】すでにデータが存在するかどうかをチェック ===
+        // tagsテーブルにデータがある場合は「やり直しモード」として動かす
+        if (Tag::exists() || Genre::exists()) {
+
+            // 1. 外部キー制約を一時的に無効化（エラー防止）
+            Schema::disableForeignKeyConstraints();
+
+            // 2. tags と genres を物理削除（IDも1リセット）
+            DB::table('tags')->truncate();
+            DB::table('genres')->truncate();
+
+            // novel_tag 中間テーブルの古い紐付けデータも一度綺麗にクリア
+            DB::table('novel_tag')->truncate();
+
+            // 3. 外部キー制約を元に戻す
+            Schema::enableForeignKeyConstraints();
+
+            \Database\Factories\TagFactory::resetIndex();
+            \Database\Factories\GenreFactory::resetIndex();
+
+            $newTags = Tag::factory()->count(15)->create();
+            $newGenres = Genre::factory()->count(5)->create();
+
+            // 5. 既存の小説データに対して、新しいジャンルとタグを割り当て直す
+            Novel::all()->each(function ($novel) use ($newTags, $newGenres) {
+
+                // 新しいジャンルからランダムに1つ選んで、小説の genre_id を更新
+                $novel->update([
+                    'genre_id' => $newGenres->random()->id
+                ]);
+
+                // 新しいタグからランダムに1〜3個を選んで中間テーブルに結びつける
+                $novel->tags()->attach($newTags->random(rand(1, 3)));
+            });
+
+            // 💡 ここで処理を終了（他のUserやNovelは一切触らない）
+            return;
+        }
+
         // 1. まずはベースとなる「ユーザー」と「タグ」と「ジャンル」を固定数作成
+
+        \Database\Factories\TagFactory::resetIndex();
+        \Database\Factories\GenreFactory::resetIndex();
+
         $users = User::factory()->count(20)->create();
         $tags = Tag::factory()->count(15)->create();
         $genres = Genre::factory()->count(5)->create(); // 先にジャンルを固定したい場合

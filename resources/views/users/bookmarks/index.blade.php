@@ -20,5 +20,5 @@
 @else
     <p>投稿はありません！</p>
 @endif
-    <a href="{{ route('users.user_index', ['user_id' => $user->id]) }}">マイページに戻る</a>
+    <a href="{{ route('users.mypage', ['user_id' => $user->id]) }}">マイページに戻る</a>
 
