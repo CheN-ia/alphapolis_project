@@ -23,18 +23,8 @@
 
 <a href="{{ route('novels.index') }}">作品一覧に戻る</a>
 
-@auth
-    <form action="{{ route('users.bookmarks.store', ['user_id' => auth()->id()]) }}" method="POST">
-        @csrf
-        <input type="hidden" name="novel_id" value ={{ $novel->id }}>
-        <button type="submit">ブックマークに追加</button>
-    </form>
-@else
-    ブックマーク機能を使うためには
-    <a href="{{ route('login.with.redirect') }}">ログインが必要です</a>
-@endauth
 
-{{-- コメント表示・入力用 --}}
+{{-- コメント表示・入力・ブックマーク追加用 --}}
 <div>
     <h2>コメント</h2>
     <x-show-novel-comments :novel-id="$novel->id"/>
@@ -45,9 +35,17 @@
             <input type="hidden" name="novel_id" value ={{ $novel->id }}>
         <button type="submit">投稿</button>
     </form>
+
+    <form action="{{ route('users.bookmarks.store', ['user_id' => auth()->id()]) }}" method="POST">
+        @csrf
+        <input type="hidden" name="novel_id" value ={{ $novel->id }}>
+        <button type="submit">ブックマークに追加</button>
+    </form>
 @else
-    コメントを入力するためには
-    <a href="{{ route('login.with.redirect') }}">ログインが必要です</a>
+    <p>
+        コメント機能・ブックマーク機能を使用するためには
+        <a href="{{ route('login.with.redirect') }}">ログイン</a>が必要です
+    </p>
 @endauth
 
 </div>
