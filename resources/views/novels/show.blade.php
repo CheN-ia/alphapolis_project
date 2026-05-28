@@ -37,9 +37,17 @@
 {{-- コメント表示・入力用 --}}
 <div>
     <h2>コメント</h2>
-    <div>
+    <x-show-novel-comments :novel-id="$novel->id"/>
+@auth
+    <form action="{{ route('users.comment.store', ['user_id' => auth()->id()]) }}" method="POST">
+        <h2>コメントする</h2>
+            <textarea name="comment" rows="10" cols="50" placeholder="こちらにコメントを入力してください..."></textarea>
+            <input type="hidden" name="novel_id" value ={{ $novel->id }}>
+        <button type="submit">投稿</button>
+    </form>
+@else
+    コメントを入力するためには
+    <a href="{{ route('login.with.redirect') }}">ログインが必要です</a>
+@endauth
 
-<form>
-    <h2>コメントする</h2>
-    <input type="text" name="comment" />
-</form>
+</div>

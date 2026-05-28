@@ -51,7 +51,8 @@ class Novel extends Model
      */
     public function commentingUsers()
     {
-        return $this->belongsToMany(User::class, 'comments');
+        return $this->belongsToMany(User::class, 'comments')
+                    ->withPivot('id','comment');;
     }
 
 

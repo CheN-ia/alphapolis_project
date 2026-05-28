@@ -1,4 +1,8 @@
 <h1>{{ $user->name }}さんのマイページ</h1>
+<div>
+    <a href="{{ route('novels.index', $user->id) }}">トップページへ</a>
+</div>
+
 <p>resources/views/users/index.blade.php</p>
 
 <div>
@@ -20,3 +24,4 @@
     <h2>投稿コメント</h2>
     <a href="{{ route('users.comment.index', $user->id) }}">コメント一覧へ</a>
 </div>
+

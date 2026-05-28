@@ -61,14 +61,18 @@ class NovelController extends Controller
         // 1. まず該当の作品が存在するかチェック
         $novel = Novel::findOrFail($novel_id);
 
-        // 2. その作品に紐づく、指定されたIDのエピソードを取得
+        //   その作品に紐づく、指定されたIDのエピソードを取得
         //    where で「作品ID」と「エピソードID」の両方が一致するものを探します
         $episode = Episode::where('novel_id', $novel_id)
                           ->where('id', $episode_id)
-                          ->firstOrFail(); // 見つからなければ404エラー
+                          ->firstOrFail();
+
+        $comment = Episode::where('novel_id', $novel_id)
+                          ->where('id', $episode_id)
+                          ->firstOrFail();
 
         // 3. ビュー（novels.episode_show）にデータを渡して表示
-        return view('novels.episode_show', compact('novel', 'episode'));
+        return view('novels.episode_show', compact('novel', 'episode', ''));
     }
 
 }

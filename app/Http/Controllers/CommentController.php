@@ -41,16 +41,12 @@ class CommentController extends Controller
             'comment'     => ['required', 'string', 'max:400'], // コメント本文（文字数は任意で調整してください）
         ]);
 
-        // 2. 対象のユーザー（コメントを投稿する人）を取得
         $user = User::findOrFail($user_id);
 
-        // 3. attach メソッドを使って中間テーブルにデータを追加
-        // 第1引数に相手のID（novel_id）、第2引数に追加したいカラム（text）を配列で渡します
         $user->comments()->attach($request->novel_id, [
             'comment' => $request->comment
         ]);
 
-        // 4. 小説の詳細画面など、元のページにメッセージ付きでリダイレクト
         return redirect()->back();
     }
 

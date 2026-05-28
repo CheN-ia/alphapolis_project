@@ -99,7 +99,7 @@ Route::middleware('auth')->group(function () {
         Route::group(['prefix' => 'comment', 'as' => 'comment.'], function() {
             Route::get('/', [CommentController::class, 'comment_show'])->name('index'); // name追加
             Route::delete('{comment_id}', [CommentController::class, 'comment_delete'])->name('delete');
-            Route::post('{comment_id}', [CommentController::class, 'comment_store'])->name('store');
+            Route::post('/', [CommentController::class, 'comment_store'])->name('store');
         });
     });
 });
