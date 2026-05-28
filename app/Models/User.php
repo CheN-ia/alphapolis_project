@@ -34,10 +34,11 @@ class User extends Authenticatable
 
 
 
-    // app/Models/User.php 内
+    // 中間テーブルブックマークを確認する
     public function bookmarkingNovels()
     {
-        return $this->belongsToMany(Novel::class,'bookmarks');
+        return $this->belongsToMany(Novel::class,'bookmarks', 'user_id', 'novel_id')
+                    ->withTimestamps();;
     // ユーザーのブックマークを取得するリレーション
     }
 
@@ -49,7 +50,7 @@ class User extends Authenticatable
     // ユーザーが作成したコメント一覧を取得するリレーション
     }
 
-  
+
     // ユーザーが作成した小説一覧を取得するリレーション
     public function novels(): BelongsToMany
     {

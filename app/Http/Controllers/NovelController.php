@@ -48,11 +48,12 @@ class NovelController extends Controller
 
     public function show(string $id)
     {
+        $user = Auth::user();
         // 指定されたIDの作品を、紐づくエピソードと一緒に取得　Eagerload
         $novel = Novel::with('episodes')->findOrFail($id);
 
         // viewに $novel を渡す
-        return view('novels.show', compact('novel'));
+        return view('novels.show', compact('novel','user'));
     }
 
     public function episode_show(string $novel_id, string $episode_id)

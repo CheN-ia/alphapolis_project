@@ -10,6 +10,7 @@ use App\Http\Controllers\WorkController;
 use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CommentController;
+use Illuminate\Support\Facades\Redirect;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +20,18 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+// 💡 修正版：元のページのURLを確実に記憶してログイン画面へ飛ばす
+Route::get('/login-with-redirect', function () {
+    // 1. 直前に見ていたページ（ボタンを押したページ）のURLを取得
+    $previousUrl = url()->previous();
+
+    // 2. Laravelがログイン後に戻る先として認識するセッションキー「url.intended」に保存
+    session(['url.intended' => $previousUrl]);
+
+    // 3. ログイン画面へリダイレクト
+    return redirect()->route('login');
+})->name('login.with.redirect');
 
 // ==========================================
 // 1. 一般公開ルート（ログイン不要、または閲覧のみ）
