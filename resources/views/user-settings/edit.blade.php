@@ -22,6 +22,8 @@
                 @if ($errors->has('password'))
                 <span class="error">{{ $errors->first('password') }}</span>
                 @endif
+            <br>
+            新しいパスワード（確認用）:<input type="password" id="password_confirmation" name="password_confirmation">
             </div>
         </div>
         <input type="hidden" name="id" value="{{ $user->id }}">

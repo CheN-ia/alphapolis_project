@@ -29,7 +29,8 @@ class BookmarkController extends Controller
     // フォームから送られてきた novel_id を指定して中間テーブルのレコードを消す
         $user->bookmarkingNovels()->detach($request->novel_id);
 
-        return redirect("/user/{$user_id}/bm");
+        return redirect()->back()
+        ->with('message', 'ブックマークを削除しました。');
     }
 
     //ブックマーク保存

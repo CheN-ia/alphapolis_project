@@ -1,6 +1,11 @@
 <h1>プロフィール</h1>
 <p>resources/views/user-setting/index.blade.php</p>
 {{-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
+@if(session('message'))
+	<div>
+		{{ session('message') }}
+	</div>
+@endif
 <div>
     <div>
         名前:{{ $user->name  }}

@@ -56,6 +56,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect("/user-settings/{$user_id}/index");
+        return redirect()->route('UserSettings.user_show', ['user_id' => $user->id])
+        ->with('message', '変更が反映されました。');
     }
 }

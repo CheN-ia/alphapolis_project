@@ -1,5 +1,10 @@
 <h1>投稿コメント一覧</h1>
 <p>resources/views/users/comments/index.blade.php</p>
+@if(session('message'))
+	<div>
+		{{ session('message') }}
+	</div>
+@endif
 @if ($comments->count() > 0)
         {{-- @foreach ディレクティブで、1件ずつ処理 --}}
         @foreach ($comments as $comment)

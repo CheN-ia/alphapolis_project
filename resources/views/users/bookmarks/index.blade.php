@@ -1,5 +1,10 @@
 <h1>ブックマーク一覧</h1>
 <p>resources/views/users/bookmarks/index.blade.php</p>
+@if(session('message'))
+	<div>
+		{{ session('message') }}
+	</div>
+@endif
 @if ($bookmarks->count() > 0)
         {{-- @foreach ディレクティブで、1件ずつ処理 --}}
         @foreach ($bookmarks as $bookmark)

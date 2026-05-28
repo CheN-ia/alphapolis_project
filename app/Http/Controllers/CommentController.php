@@ -29,7 +29,8 @@ class CommentController extends Controller
             ->where('user_id', $user->id) // 他人のコメントを勝手に消せないようにガード
             ->delete();
 
-        return redirect()->back();
+        return redirect()->back()
+        ->with('message', 'コメントを削除しました。');
     }
 
     //投稿コメント保存
