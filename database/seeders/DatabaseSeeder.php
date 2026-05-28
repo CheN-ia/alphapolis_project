@@ -84,7 +84,7 @@ class DatabaseSeeder extends Seeder
                 $novel->tags()->attach($tags->random(rand(1, 3)));
 
                 // ランダムなユーザーが作者になる（worksテーブル）
-                $novel->authors()->attach($users->random()); // ※モデルにリレーション定義が必要
+                $novel->users()->attach($users->random()); // ※モデルにリレーション定義が必要
 
                 // ランダムなユーザーが数人ブックマークする（bookmarksテーブル）
                 $novel->bookmarkingUsers()->attach($users->random(rand(0, 5)));

@@ -26,7 +26,7 @@ class WorkController extends Controller
         $works = $user->novels;
 
         // 画面に小説一覧を渡す
-        return view('users.works.index', compact('works'));
+        return view('works.index', compact('works'));
     }
 
     /**
@@ -39,7 +39,7 @@ class WorkController extends Controller
         $tags = Tag::all();
 
         // フォルダ階層に合わせてデータを渡して表示
-        return view('users.works.create', compact('genres', 'tags'));
+        return view('works.create', compact('genres', 'tags'));
     }
 
     /**
@@ -98,7 +98,7 @@ class WorkController extends Controller
     {
         // Contact モデルで、編集する対象のデータを取得する
         $work = Novel::find($id);
-        return view('users.works.show', compact('work'));
+        return view('works.show', compact('work'));
     }
 
     /**
@@ -113,7 +113,7 @@ class WorkController extends Controller
 
     // ★ 3. ここが重要！ 正しいビューを return していますか？
     // フォルダ階層が users/works/edit.blade.php なので、ドット区切りで指定します
-        return view('users.works.edit', compact('work'));
+        return view('works.edit', compact('work'));
 
     }
 

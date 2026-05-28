@@ -1,6 +1,6 @@
 <h1>新規小説作成</h1>
 
-<form action="" method="POST">
+<form action="{{ route('work.store') }}" method="POST">
     @csrf
 
     <div>

@@ -12,7 +12,7 @@
 
     <div>
         <label for="tags">タグ</label>
-        <input type="text" id="tags" name="tags" value="{{ old('tags', $work->tags_string) }}">
+        <input type="text" id="tags" name="tags" value="{{ old('tags', $work->tag) }}">
     </div>
 
     <button type="submit">変更を保存する</button>

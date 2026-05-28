@@ -34,11 +34,13 @@
                 @foreach($work->episodes as $index => $episode)
                     <tr>
                         <td>第 {{ $index + 1 }} 話</td>
-                        <td>{{ $episode->title }}</td>
+                        <td>
+                        <a href="{{ route('work.episode.show', [$work->id, $episode->id]) }}">
+                            {{ $episode->title }}
+                        </a>
+                        </td>
                         <td>{{ $episode->created_at->format('Y/m/d H:i') }}</td>
                         <td>
-                            <a href="{{ route('work.episode.edit', [$work->id, $episode->id]) }}">修正</a>
-
                             <form action="{{ route('work.episode.delete', [$work->id, $episode->id]) }}" method="POST" onsubmit="return confirm('本当にこのエピソードを削除しますか？');" style="display:inline;">
                                 @csrf
                                 @method('DELETE')

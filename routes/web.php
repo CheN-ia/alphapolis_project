@@ -65,6 +65,7 @@ Route::middleware('auth')->group(function () {
         Route::group(['prefix' => '{novel_id}/episodes', 'as' => 'episode.'], function() {
             Route::get('create', [EpisodeController::class, 'episode_create'])->name('create');
             Route::post('/', [EpisodeController::class, 'episode_store'])->name('store');
+            Route::get('{episode_id}', [EpisodeController::class, 'episode_show'])->name('show');
             Route::get('{episode_id}/edit', [EpisodeController::class, 'episode_edit'])->name('edit');
             Route::patch('{episode_id}', [EpisodeController::class, 'episode_update'])->name('update');
             Route::delete('{episode_id}', [EpisodeController::class, 'episode_delete'])->name('delete');

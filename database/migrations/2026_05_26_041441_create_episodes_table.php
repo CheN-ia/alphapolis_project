@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('text');
-            $table->string('image');
+            $table->string('image')->nullable();;
             $table->integer('PV');
             $table->foreignId('novel_id');
             $table->timestamps();
