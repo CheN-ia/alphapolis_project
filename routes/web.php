@@ -84,8 +84,9 @@ Route::middleware('auth')->group(function () {
 
         // コメント管理画面
         Route::group(['prefix' => 'comment', 'as' => 'comment.'], function() {
-            Route::get('/', [CommentController::class, 'bm_show'])->name('index');
-            Route::delete('{comment_id}', [CommentController::class, 'bm_delete'])->name('delete');
+            Route::get('/', [CommentController::class, 'comment_show'])->name('index'); // name追加
+            Route::delete('{comment_id}', [CommentController::class, 'comment_delete'])->name('delete');
+            Route::post('{comment_id}', [CommentController::class, 'comment_store'])->name('store');
         });
     });
 });
