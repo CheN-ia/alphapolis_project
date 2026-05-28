@@ -38,26 +38,26 @@ Route::middleware('auth')->group(function () {
 
     //ユーザー設定
     Route::group(['prefix' => 'user-settings', 'as' => 'UserSettings.'], function() {
-        Route::get('{user_id}', [UserController::class, 'user_show']);
+        Route::get('{user_id}', [UserController::class, 'user_show'])->name('user_show');
         Route::get('{user_id}/edit', [UserController::class, 'user_edit']);
         Route::patch('{user_id}', [UserController::class, 'user_update']);
     });
 
     //ユーザー管理画面
     Route::group(['prefix' => 'user/{user_id}', 'as' => 'users.'], function() {
-        Route::get('index', [UserController::class, 'user_index'])->name('mypage');
+        Route::get('index', [UserController::class, 'user_index'])->name('user_index');
 
         //ブックマーク一覧
         Route::group(['prefix' => 'bm', 'as' => 'Bookmarks.'], function() {
-            Route::get('/', [BookmarkController::class, 'bm_show']);
+            Route::get('/', [BookmarkController::class, 'bm_show'])->name('bm_show');
             Route::delete('delete', [BookmarkController::class, 'bm_delete']);
             Route::post('/', [BookmarkController::class, 'bm_store']);
         });
 
         //コメント管理画面
         Route::group(['prefix' => 'comment', 'as' => 'Comment.'], function() {
-            Route::get('/', [CommentController::class, 'bm_show']);
-            Route::delete('{comment_id}', [CommentController::class, 'bm_delete']);
+            Route::get('/', [CommentController::class, 'comment_show'])->name('comment_show');
+            Route::delete('{comment_id}', [CommentController::class, 'comment_delete']);
         });
 
          // 作品投稿編集（※末尾に ->name(...) を追記しました）
