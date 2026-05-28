@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function () {
         Route::group(['prefix' => 'comment', 'as' => 'Comment.'], function() {
             Route::get('/', [CommentController::class, 'comment_show'])->name('comment_show');
             Route::delete('{comment_id}', [CommentController::class, 'comment_delete']);
+            Route::post('/', [CommentController::class, 'comment_store']);
         });
 
          // 作品投稿編集（※末尾に ->name(...) を追記しました）
