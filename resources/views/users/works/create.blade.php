@@ -29,6 +29,6 @@
 
     <div style="margin-top: 20px;">
         <button type="submit">作成する</button>
-        <a href="../{{ Auth::id() }}">戻る</a>
+            <a href="{{ route('work.index') }}">戻る</a>
     </div>
 </form>

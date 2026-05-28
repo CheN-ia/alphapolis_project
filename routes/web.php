@@ -32,7 +32,6 @@ Route::group(['prefix' => 'novels', 'as' => 'novels.'], function() {
     Route::get('{novel_id}/episode/{episode_id}', [NovelController::class, 'episode_show'])->name('episode_show');
 });
 
-
 // ==========================================
 // 2. 認証必須ルート（マイページ・投稿管理・設定など）
 // ==========================================
@@ -45,18 +44,40 @@ Route::middleware('auth')->group(function () {
 
     // ユーザー設定（user-settings/配下のビューに対応）
     Route::group(['prefix' => 'user-settings', 'as' => 'usersettings.'], function() {
-        Route::get('{user_id}', [UserController::class, 'user_show'])->name('user_show');;
+        Route::get('{user_id}', [UserController::class, 'user_show'])->name('user_show');
         Route::get('{user_id}/edit', [UserController::class, 'user_edit']);
         Route::patch('{user_id}', [UserController::class, 'user_update']);
     });
 
-    // ユーザー管理画面・マイページ（users/配下のビューに対応）
+    // --- ★【改善】作品・エピソード管理（works）を外に独立 ---
+    // URLから「user/{user_id}」が消え、ルート名も「work.xxx」にスッキリします
+    Route::group(['prefix' => 'works', 'as' => 'work.'], function() {
+        Route::get('/', [WorkController::class, 'work_index'])->name('index');
+        Route::get('create', [WorkController::class, 'work_create'])->name('create');
+        Route::post('/', [WorkController::class, 'work_store'])->name('store');
+
+        Route::get('{novel_id}', [WorkController::class, 'work_show'])->name('show');
+        Route::get('{novel_id}/edit', [WorkController::class, 'work_edit'])->name('edit');
+        Route::patch('{novel_id}', [WorkController::class, 'work_update'])->name('update');
+        Route::delete('{novel_id}', [WorkController::class, 'work_delete'])->name('delete');
+
+        // エピソード管理（work.episode.xxx）
+        Route::group(['prefix' => '{novel_id}/episodes', 'as' => 'episode.'], function() {
+            Route::get('create', [EpisodeController::class, 'episode_create'])->name('create');
+            Route::post('/', [EpisodeController::class, 'episode_store'])->name('store');
+            Route::get('{episode_id}/edit', [EpisodeController::class, 'episode_edit'])->name('edit');
+            Route::patch('{episode_id}', [EpisodeController::class, 'episode_update'])->name('update');
+            Route::delete('{episode_id}', [EpisodeController::class, 'episode_delete'])->name('delete');
+        });
+    });
+
+    // ユーザーマイページ・ブックマーク・コメント（これらは user/{user_id} のまま維持）
     Route::group(['prefix' => 'user/{user_id}', 'as' => 'users.'], function() {
         Route::get('/', [UserController::class, 'user_index'])->name('mypage');
 
         // ブックマーク一覧
         Route::group(['prefix' => 'bm', 'as' => 'bookmarks.'], function() {
-            Route::get('/', [BookmarkController::class, 'bm_show'])->name('index'); // name追加
+            Route::get('/', [BookmarkController::class, 'bm_show'])->name('index');
             Route::delete('{bm_id}', [BookmarkController::class, 'bm_delete'])->name('delete');
             Route::post('/', [BookmarkController::class, 'bm_store'])->name('store');
         });
@@ -67,28 +88,8 @@ Route::middleware('auth')->group(function () {
             Route::delete('{comment_id}', [CommentController::class, 'comment_delete'])->name('delete');
             Route::post('{comment_id}', [CommentController::class, 'comment_store'])->name('store');
         });
-
-        // 作品【投稿・編集】（users/works/ 配下のビューに対応）
-        Route::group(['prefix' => 'works'], function() {
-        Route::get('/', [WorkController::class, 'work_index'])->name('work_index');
-        Route::get('create', [WorkController::class, 'work_create'])->name('work_create');
-        Route::post('/', [WorkController::class, 'work_store'])->name('work_store');
-        Route::get('{novel_id}', [WorkController::class, 'work_show'])->name('work_show');
-        Route::get('{novel_id}/edit', [WorkController::class, 'work_edit'])->name('work_edit');
-        Route::patch('{novel_id}', [WorkController::class, 'work_update'])->name('work_update');
-        Route::delete('{novel_id}', [WorkController::class, 'work_delete'])->name('work_delete');
-        });
-
-        // // エピソード【投稿・編集】（users/episodes/ 配下のビューに対応）
-        // // URLの重複や競合を防ぐため、頭に `episodes` というプレフィックスを挟むと綺麗になります
-        // Route::group(['prefix' => 'episodes/{novel_id}', 'as' => 'episodes.'], function() {
-        //     Route::get('create', [EpisodeController::class, 'episode_create'])->name('create');
-        //     Route::post('store', [EpisodeController::class, 'episode_store'])->name('store');
-        //     Route::get('{episode_id}/edit', [EpisodeController::class, 'work_edit'])->name('edit'); // メソッド名は適宜修正してください
-        //     Route::patch('{episode_id}', [EpisodeController::class, 'work_update'])->name('update');
-        //     Route::delete('{episode_id}', [EpisodeController::class, 'work_delete'])->name('delete');
-        // });
     });
 });
+
 
 require __DIR__.'/auth.php';
