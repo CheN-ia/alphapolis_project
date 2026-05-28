@@ -22,10 +22,13 @@
                 @if ($errors->has('password'))
                 <span class="error">{{ $errors->first('password') }}</span>
                 @endif
+            <br>
+            新しいパスワード（確認用）:<input type="password" id="password_confirmation" name="password_confirmation">
             </div>
         </div>
         <input type="hidden" name="id" value="{{ $user->id }}">
         <div><input type="submit" value="変更の反映"></div>
     </form>
-    <a href="/user/{{ $user->id }}">マイページに戻る</a>
+     <a href="{{ route('users.user_index', ['user_id' => $user->id]) }}">マイページに戻る</a>
+
 </div>

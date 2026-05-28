@@ -37,9 +37,19 @@ class User extends Authenticatable
     // app/Models/User.php 内
     public function bookmarkingNovels()
     {
-        // 第2引数に中間テーブル名「works」を指定します
         return $this->belongsToMany(Novel::class,'bookmarks');
+    // ユーザーのブックマークを取得するリレーション
     }
+
+    public function comments()
+    {
+        // 第2引数に中間テーブル名「comments」を指定します
+        return $this->belongsToMany(Novel::class,'comments')
+                    ->withPivot('id','comment');
+    // ユーザーが作成したコメント一覧を取得するリレーション
+    }
+
+  
     // ユーザーが作成した小説一覧を取得するリレーション
     public function novels(): BelongsToMany
     {
@@ -47,4 +57,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Novel::class, 'works', 'user_id', 'novel_id')
                     ->withTimestamps(); // 中間テーブルのcreated_at/updated_atも自動更新する場合
     }
+
+
+
 }

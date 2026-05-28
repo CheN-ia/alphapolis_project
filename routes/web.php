@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
 
     // ユーザー設定（user-settings/配下のビューに対応）
     Route::group(['prefix' => 'user-settings', 'as' => 'usersettings.'], function() {
-        Route::get('{user_id}', [UserController::class, 'user_show']);
+        Route::get('{user_id}', [UserController::class, 'user_show'])->name('user_show');;
         Route::get('{user_id}/edit', [UserController::class, 'user_edit']);
         Route::patch('{user_id}', [UserController::class, 'user_update']);
     });
