@@ -7,8 +7,7 @@
 </div>
 <div>
     <h2>投稿作品</h2>
-    <a href="{{ route('users.work_index', ['user_id' => $user->id]) }}">投稿作品一覧へ</a>
-</div>
+    <a href="{{ route('users.work_index', ['user_id' => $user->id]) }}">投稿作品一覧へ</a></div>
 <div>
     <h2>ブックマーク</h2>
     <a href="{{ route('users.Bookmarks.bm_show', ['user_id' => $user->id]) }}">ブックマーク一覧へ</a>

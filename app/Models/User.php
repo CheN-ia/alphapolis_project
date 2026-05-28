@@ -49,6 +49,8 @@ class User extends Authenticatable
     // ユーザーが作成したコメント一覧を取得するリレーション
     }
 
+  
+    // ユーザーが作成した小説一覧を取得するリレーション
     public function novels(): BelongsToMany
     {
         // belongsToMany(関連付けるモデル名, 中間テーブル名, 中間テーブル内での自分のID, 相手のID)

@@ -2,22 +2,43 @@
 <p>resources/views/users/index.blade.php</p>
 
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-<a href="/user/{{ $user->id }}">入力画面へ</a>
+<a href="/user/{{ $user->id }}">ユーザーページ</a>
+
+<form action="{{ route('novels.index') }}" method="GET" class="search-form">
+    <select name="genre_id">
+        <option value="">すべてのジャンル</option>
+        @foreach($genres as $genre)
+            <option value="{{ $genre->id }}" {{ request('genre_id') == $genre->id ? 'selected' : '' }}>
+                {{ $genre->genre }}
+            </option>
+        @endforeach
+    </select>
+
+    <select name="tag_id">
+        <option value="">すべてのタグ</option>
+        @foreach($tags as $tag)
+            <option value="{{ $tag->id }}" {{ request('tag_id') == $tag->id ? 'selected' : '' }}>
+                {{ $tag->tag }}
+            </option>
+        @endforeach
+    </select>
+
+    <button type="submit">検索</button>
+</form>
 @if ($works->count() > 0)
     <table>
         <tr>
-            <th>ID</th>
             <th>title</th>
         </tr>
         {{-- @foreach ディレクティブで、1件ずつ処理 --}}
         @foreach ($works as $work)
             <tr>
-                <td>{{ $work->id }}</td>
-                <td>{{ $work->title }}</td>
-            </tr>
+                <td>
+                    <a href="{{ route('novels.show', $work->id) }}">{{ $work->title }}</a>
+                </td>
+                </tr>
         @endforeach
     </table>
 @else
     <p>お問い合わせはありません</p>
 @endif
-
