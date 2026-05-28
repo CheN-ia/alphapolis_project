@@ -2,7 +2,7 @@
 <p>resources/views/users/works/index.blade.php</p>
 
 <div class="actions" style="margin-bottom: 20px;">
-    <a href="{{ route('users.work_create', ['user_id' => Auth::id()]) }}" class="btn-create">新規小説を作成する</a>
+    <a href="{{ route('work.create') }}" class="btn-create">新規小説を作成する</a>
 </div>
 
 {{-- コントローラーから渡された $works の件数チェック --}}
@@ -18,15 +18,15 @@
             @foreach ($works as $work)
                 <tr>
                     <td>
-                        <a href="{{ route('users.work_show', ['user_id' => Auth::id(), 'novel_id' => $work->id]) }}">
+                        <a href="{{ route('work.show', $work->id) }}">
                             {{ $work->title }}
                         </a>
                     </td>
                     <td>
-                        <form action="{{ route('users.work_delete', ['user_id' => Auth::id(), 'novel_id' => $work->id]) }}" method="POST" onsubmit="return confirm('本当に削除しますか？');" style="display:inline;">
+                        <form action="{{ route('work.delete', $work->id) }}" method="POST" onsubmit="return confirm('本当に削除しますか？');" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn-delete" style="color: red; cursor: pointer;">削除</button>
+                            <button type="submit">削除</button>
                         </form>
                     </td>
                 </tr>

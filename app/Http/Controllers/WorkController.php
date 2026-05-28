@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class WorkController extends Controller
 {
     public function work_index()
@@ -105,9 +106,14 @@ class WorkController extends Controller
      */
     public function work_edit(string $id)
     {
-        // Contact モデルで、編集する対象のデータを取得する
+        // 1. 編集対象の作品データを取得
+        $work = Novel::findOrFail($id);
 
-        // 編集画面に、データを表示する
+        // 2. データの所有者チェック（セキュリティ）
+
+    // ★ 3. ここが重要！ 正しいビューを return していますか？
+    // フォルダ階層が users/works/edit.blade.php なので、ドット区切りで指定します
+        return view('users.works.edit', compact('work'));
 
     }
 
@@ -116,22 +122,28 @@ class WorkController extends Controller
      */
     public function work_update(Request $request, string $id)
     {
+        $work = Novel::findOrFail($id);
+
+        // ここに更新処理を書く（例）
+        $work->title = $request->title;
+        $work->save();
+
+        // 更新後は詳細画面（show）に戻す
+        return redirect()->route('work.show', $work->id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function work_delete(string $user_id, string $novel_id)
+    public function work_delete(string $novel_id)
     {
-        // 1. URLのパラメータから削除対象の小説を取得する
-        $novel_to_delete = Novel::find($novel_id);
+        $work = Novel::findOrFail($novel_id);
 
-        // 念のため、データが存在する場合のみ削除を実行（安全対策）
-        if ($novel_to_delete) {
-            $novel_to_delete->delete();
-        }
 
-        // 2. 小説一覧画面（/user/{user_id}）にリダイレクトする
-        return redirect()->route('users.work_index', ['user_id' => $user_id]);
+
+        $work->delete();
+
+        // 削除後は作品一覧（work.index）にリダイレクト
+        return redirect()->route('work.index');
     }
 }
