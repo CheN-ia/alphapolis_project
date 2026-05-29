@@ -51,6 +51,7 @@ class WorkController extends Controller
     $novel = new Novel();
     $novel->title = $request->input('title');
     $novel->genre_id = $request->input('genre_id');
+    $novel->abstract = '';
     $novel->save();
 
     // 3. ユーザーと小説の紐づけ（中間テーブル works への保存）

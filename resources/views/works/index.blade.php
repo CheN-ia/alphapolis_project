@@ -1,3 +1,7 @@
+{{-- layoutsディレクトリからnavメニュー呼び出し --}}
+@extends('layouts.novels-nav')
+@section('content')
+
 <h1>小説管理画面</h1>
 <p>resources/views/users/works/index.blade.php</p>
 <a href="{{ route('users.mypage', Auth::user()->id) }}" >マイページに戻る</a>
@@ -37,3 +41,5 @@
     {{-- 作品がない場合は「まだありません」を表示 --}}
     <p>作品はまだありません。</p>
 @endif
+
+@endsection

@@ -1,3 +1,7 @@
+{{-- //layoutsディレクトリからnavメニュー呼び出し --}}
+@extends('layouts.novels-nav')
+@section('content')
+
 <h1>新規小説作成</h1>
 
 <form action="{{ route('work.store') }}" method="POST">
@@ -32,3 +36,5 @@
             <a href="{{ route('work.index') }}">戻る</a>
     </div>
 </form>
+
+@endsection

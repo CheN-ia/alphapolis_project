@@ -1,3 +1,7 @@
+{{-- layoutsディレクトリからnavメニュー呼び出し --}}
+@extends('layouts.novels-nav')
+@section('content')
+
 <h1>作品詳細画面</h1>
 <p>resources/views/users/works/show.blade.php</p>
     <a href="{{ route('work.index') }}">戻る</a>
@@ -58,3 +62,6 @@
         </table>
     @endif
 </section>
+
+
+@endsection
