@@ -36,6 +36,13 @@
                     <li><a href="{{ route('novels.index') }}">トップページ</a></li>
                     @auth
                         <li><a href="{{ route('users.mypage', ['user_id' => auth()->id()]) }}">ユーザーページ</a></li>
+                        <li><a href={{ route('logout') }} onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                            ログアウト
+                        </a>
+                        <form id='logout-form' action={{ route('logout')}} method="POST" style="display: none;">
+                        @csrf
+                        </li>
                     @else
                         <li><a href="{{ route('login.with.redirect') }}">ログイン</a></li>
                         <li><a href="{{ route('register.with.redirect') }}">新規登録</a></li>
