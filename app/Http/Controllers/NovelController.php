@@ -28,13 +28,13 @@ class NovelController extends Controller
             $query->where('genre_id', $request->genre_id);
         }
 
-        // 5. タグが選択されていたら、条件を追加（多対多のリレーションを想定）
-        if ($request->filled('tag_id')) {
-            // worksテーブルとtagsテーブルがリレーション（tags）で結ばれている場合
-            $query->whereHas('tags', function($q) use ($request) {
-                $q->where('tags.id', $request->tag_id);
-            });
-        }
+if ($request->filled('tag_id')) {
+    foreach ($request->tag_id as $tagId) {
+        $query->whereHas('tags', function($q) use ($tagId) {
+            $q->where('tags.id', $tagId);
+        });
+    }
+}
 
         // 6. 最終的な結果を取得
         $works = $query->get();
