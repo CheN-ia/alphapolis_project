@@ -11,6 +11,10 @@
             <span>{{ $tag->tag }}</span>
         @endforeach
     </p>
+    <p>
+        あらすじ:
+        {{ $work->abstract}}
+    </p>
 
     <a href="{{ route('work.edit', $work->id) }}">この作品を編集する</a>
 </div>

@@ -1,6 +1,6 @@
 {{-- layoutsディレクトリからnavメニュー呼び出し --}}
-@extends('layouts.novels-nav')
-@section('content')
+{{-- @extends('layouts.novels-nav')
+@section('content') --}}
 
 <h1>新規エピソード追加</h1>
 
@@ -29,4 +29,4 @@
 </form>
 
 
-@endsection
+{{-- @endsection --}}

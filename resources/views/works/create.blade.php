@@ -26,7 +26,10 @@
         <label>新しいタグ（複数ある場合はカンマ「,」で区切る）:</label><br>
         <input type="text" name="new_tags" placeholder="例: 冒険,チート">
     </div>
-
+    <div>
+        <label>あらすじ:</label><br>
+        <textarea name="abstract" rows="15" cols="60" required></textarea>
+    </div>
     <div style="margin-top: 20px;">
         <button type="submit">作成する</button>
             <a href="{{ route('work.index') }}">戻る</a>

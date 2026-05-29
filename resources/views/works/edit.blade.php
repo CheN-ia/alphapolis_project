@@ -22,6 +22,10 @@
     <div>
         <label >新しいタグを追加（カンマ `,` 区切りで複数入力可）:</label><br>
         <input type="text" id="new_tags" name="new_tags" value="{{ old('new_tags') }}" placeholder="例: ファンタジー, 異世界">
+        </div>
+    <div>
+        <label for="abstract">あらすじ:</label><br>
+        <textarea id="abstract" name="abstract" rows="15" cols="60" required>{{ old('abstract', $work->abstract) }}</textarea>
     </div>
     <button type="submit">変更を保存する</button>
 </form>
