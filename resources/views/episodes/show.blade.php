@@ -1,3 +1,7 @@
+{{-- layoutsディレクトリからnavメニュー呼び出し --}}
+@extends('layouts.novels-nav')
+@section('content')
+
 <h1>エピソード詳細（管理画面）</h1>
 
 <p><a href="{{ route('work.show', $novel_id) }}">作品詳細に戻る</a></p>
@@ -35,3 +39,5 @@
         <button type="submit" style="color: red;">このエピソードを削除する</button>
     </form>
 </div>
+
+@endsection

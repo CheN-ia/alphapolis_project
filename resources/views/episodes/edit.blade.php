@@ -1,3 +1,7 @@
+{{-- layoutsディレクトリからnavメニュー呼び出し --}}
+@extends('layouts.novels-nav')
+@section('content')
+
 <h1>編集</h1>
 <p>resources/views/episodes/edit.blade.php</p>
 
@@ -24,3 +28,5 @@
 </form>
 
 <a href="{{ route('work.episode.show', [$novel_id, $episode->id]) }}">戻る</a>
+
+@endsection

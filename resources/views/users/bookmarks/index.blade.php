@@ -1,3 +1,7 @@
+{{-- layoutsディレクトリからnavメニュー呼び出し --}}
+@extends('layouts.novels-nav')
+@section('content')
+
 <h1>ブックマーク一覧</h1>
 <p>resources/views/users/bookmarks/index.blade.php</p>
 @if(session('message'))
@@ -20,4 +24,6 @@
 @else
     <p>投稿はありません！</p>
 @endif
-<a href="{{ route('users.mypage', $user->id) }}">マイページに戻る</a>
+<a href="{{ route('users.mypage', $user->id) }}">ユーザーページに戻る</a>
+
+@endsection

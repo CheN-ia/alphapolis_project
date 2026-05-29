@@ -1,3 +1,7 @@
+{{-- layoutsディレクトリからnavメニュー呼び出し --}}
+@extends('layouts.novels-nav')
+@section('content')
+
 <h1>プロフィール</h1>
 <p>resources/views/user-setting/index.blade.php</p>
 {{-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
@@ -19,6 +23,7 @@
     <a href="{{ $user->id }}/edit">プロフィール編集</a>
 </div>
 
- <a href="{{ route('users.mypage', ['user_id' => $user->id]) }}">マイページに戻る</a>
+ <a href="{{ route('users.mypage', ['user_id' => $user->id]) }}">ユーザーページに戻る</a>
 
+@endsection
 

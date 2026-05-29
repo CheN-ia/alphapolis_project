@@ -1,3 +1,7 @@
+{{-- layoutsディレクトリからnavメニュー呼び出し --}}
+@extends('layouts.novels-nav')
+@section('content')
+
 <h1>投稿コメント一覧</h1>
 <p>resources/views/users/comments/index.blade.php</p>
 @if(session('message'))
@@ -21,4 +25,7 @@
 @else
     <p>投稿コメントはありません！</p>
 @endif
-    <a href="{{ route('users.mypage', ['user_id' => $user->id]) }}">マイページに戻る</a>
+    <a href="{{ route('users.mypage', ['user_id' => $user->id]) }}">ユーザーページに戻る</a>
+
+
+@endsection

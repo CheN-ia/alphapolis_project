@@ -1,3 +1,7 @@
+{{-- layoutsディレクトリからnavメニュー呼び出し --}}
+@extends('layouts.novels-nav')
+@section('content')
+
 <h1>{{ $novel->title }}</h1>
 
 <h2>エピソード一覧</h2>
@@ -49,3 +53,4 @@
 @endauth
 
 </div>
+@endsection

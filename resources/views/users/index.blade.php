@@ -1,4 +1,8 @@
-<h1>{{ $user->name }}さんのマイページ</h1>
+{{-- layoutsディレクトリからnavメニュー呼び出し --}}
+@extends('layouts.novels-nav')
+@section('content')
+
+<h1>{{ $user->name }}さんのユーザーページ</h1>
 <div>
     <a href="{{ route('novels.index') }}">トップページへ</a>
 </div>
@@ -25,3 +29,4 @@
     <a href="{{ route('users.comment.index', $user->id) }}">コメント一覧へ</a>
 </div>
 
+@endsection
