@@ -3,8 +3,14 @@
 @section('content')
 
 <h1>{{ $novel->title }}</h1>
-<div>あらすじ：<br>
+<div>あらすじ:<br>
     {{$novel->abstract}}</div>
+<div>
+    タグ:<br>
+    @foreach($novel->tags as $tag)
+                {{ $tag->tag }}
+        @endforeach
+</div>
 <h2>エピソード一覧</h2>
 @if(session('message'))
 	<div>

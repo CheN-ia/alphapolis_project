@@ -17,15 +17,18 @@
             </option>
         @endforeach
     </select>
-
-    <select name="tag_id">
-        <option value="">すべてのタグ</option>
+    <br>
+    <div style="margin-top: 15px;">
+        <label>タグ:</label><br>
         @foreach($tags as $tag)
-            <option value="{{ $tag->id }}" {{ request('tag_id') == $tag->id ? 'selected' : '' }}>
-                {{ $tag->tag }}
-            </option>
+            <input type="checkbox"
+                name="tag_id[]"
+                value="{{ $tag->id }}"
+                {{ is_array(request('tag_id')) && in_array($tag->id, request('tag_id')) ? 'checked' : '' }}>
+            {{ $tag->tag }}
         @endforeach
-    </select>
+    </div>
+
 
     <button type="submit">検索</button>
 </form>
