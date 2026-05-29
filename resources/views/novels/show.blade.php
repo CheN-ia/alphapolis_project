@@ -3,7 +3,8 @@
 @section('content')
 
 <h1>{{ $novel->title }}</h1>
-
+<div>あらすじ：<br>
+    {{$novel->abstract}}</div>
 <h2>エピソード一覧</h2>
 @if(session('message'))
 	<div>

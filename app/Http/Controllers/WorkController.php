@@ -51,7 +51,7 @@ class WorkController extends Controller
     $novel = new Novel();
     $novel->title = $request->input('title');
     $novel->genre_id = $request->input('genre_id');
-    $novel->abstract = '';
+    $novel->abstract = $request->input('abstract');
     $novel->save();
 
     // 3. ユーザーと小説の紐づけ（中間テーブル works への保存）
@@ -118,9 +118,9 @@ class WorkController extends Controller
      */
     public function work_update(Request $request, string $id)
     {
+
 // 1. 対象の作品を取得
     $work = Novel::findOrFail($id);
-
     // 2. チェックボックスで残った既存のタグID配列を取得（なければ空配列）
     $tagIds = $request->input('existing_tags', []);
 
@@ -148,6 +148,7 @@ class WorkController extends Controller
 
     // 5. 作品自体の情報（タイトルなど）を更新
     $work->title = $request->title;
+    $work->abstract = $request->input('abstract');
     $work->save();
 
     // 更新後は詳細画面（show）に戻す
