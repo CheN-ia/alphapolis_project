@@ -10,11 +10,19 @@
         <input type="text" id="title" name="title" value="{{ old('title', $work->title) }}" required>
     </div>
 
-    <div>
-        <label for="tags">タグ</label>
-        <input type="text" id="tags" name="tags" value="{{ old('tags', $work->tag) }}">
+    <div class="form-group">
+        <label>タグ（チェックを外すと削除されます）:</label><br>
+        @foreach($work->tags as $tag)
+            <label >
+                <input type="checkbox" name="existing_tags[]" value="{{ $tag->id }}" checked>
+                {{ $tag->tag }}
+            </label>
+        @endforeach
     </div>
-
+    <div>
+        <label >新しいタグを追加（カンマ `,` 区切りで複数入力可）:</label><br>
+        <input type="text" id="new_tags" name="new_tags" value="{{ old('new_tags') }}" placeholder="例: ファンタジー, 異世界">
+    </div>
     <button type="submit">変更を保存する</button>
 </form>
 
