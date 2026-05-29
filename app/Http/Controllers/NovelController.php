@@ -48,11 +48,12 @@ class NovelController extends Controller
 
     public function show(string $id)
     {
+        $user = Auth::user();
         // 指定されたIDの作品を、紐づくエピソードと一緒に取得　Eagerload
         $novel = Novel::with('episodes')->findOrFail($id);
 
         // viewに $novel を渡す
-        return view('novels.show', compact('novel'));
+        return view('novels.show', compact('novel','user'));
     }
 
     public function episode_show(string $novel_id, string $episode_id)
@@ -60,14 +61,18 @@ class NovelController extends Controller
         // 1. まず該当の作品が存在するかチェック
         $novel = Novel::findOrFail($novel_id);
 
-        // 2. その作品に紐づく、指定されたIDのエピソードを取得
+        //   その作品に紐づく、指定されたIDのエピソードを取得
         //    where で「作品ID」と「エピソードID」の両方が一致するものを探します
         $episode = Episode::where('novel_id', $novel_id)
                           ->where('id', $episode_id)
-                          ->firstOrFail(); // 見つからなければ404エラー
+                          ->firstOrFail();
+
+        $comment = Episode::where('novel_id', $novel_id)
+                          ->where('id', $episode_id)
+                          ->firstOrFail();
 
         // 3. ビュー（novels.episode_show）にデータを渡して表示
-        return view('novels.episode_show', compact('novel', 'episode'));
+        return view('novels.episode_show', compact('novel', 'episode', ''));
     }
 
 }

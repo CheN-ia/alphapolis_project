@@ -2,7 +2,14 @@
 <p>resources/views/users/index.blade.php</p>
 
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-<a href="/user/{{ $user->id }}">ユーザーページ</a>
+
+@auth
+    <a href="/user/{{ $user->id }}">ユーザーページ</a>
+@else
+    <a href="{{ route('login.with.redirect') }}">
+        ログイン
+    </a>
+@endauth
 
 <form action="{{ route('novels.index') }}" method="GET" class="search-form">
     <select name="genre_id">

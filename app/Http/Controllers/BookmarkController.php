@@ -41,9 +41,10 @@ class BookmarkController extends Controller
         //
         $user = User::findOrFail($user_id);
 
-        // 3. attach() を使って、中間テーブル（bookmarks）に user_id と novel_id の組み合わせを追加
-        // すでにモデルに定義してある `bookmarkingNovels()` リレーションを呼び出します
-        $user->bookmarkingNovels()->attach($request->novel_id);
-        return redirect();
+        // attach() を使って、中間テーブル（bookmarks）に user_id と novel_id の組み合わせを追加
+        $user->bookmarkingNovels()->syncWithoutDetaching([$request->novel_id]);
+
+        return redirect()->back()
+        ->with('message', 'ブックマークに追加しました。');
     }
 }

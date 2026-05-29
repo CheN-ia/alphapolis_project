@@ -10,6 +10,7 @@ use App\Http\Controllers\WorkController;
 use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CommentController;
+use Illuminate\Support\Facades\Redirect;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +20,19 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+// ログイン画面への遷移
+// 元のページのURLを確実に記憶してログイン画面へ飛ばす
+Route::get('/login-with-redirect', function () {
+    // 直前に見ていたページ（ボタンを押したページ）のURLを取得
+    $previousUrl = url()->previous();
+
+    // Laravelがログイン後に戻る先として認識するセッションキー「url.intended」に保存
+    session(['url.intended' => $previousUrl]);
+
+    // ログイン画面へリダイレクト
+    return redirect()->route('login');
+})->name('login.with.redirect');
 
 // ==========================================
 // 1. 一般公開ルート（ログイン不要、または閲覧のみ）
@@ -87,7 +101,7 @@ Route::middleware('auth')->group(function () {
         Route::group(['prefix' => 'comment', 'as' => 'comment.'], function() {
             Route::get('/', [CommentController::class, 'comment_show'])->name('index'); // name追加
             Route::delete('{comment_id}', [CommentController::class, 'comment_delete'])->name('delete');
-            Route::post('{comment_id}', [CommentController::class, 'comment_store'])->name('store');
+            Route::post('/', [CommentController::class, 'comment_store'])->name('store');
         });
     });
 });
