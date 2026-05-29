@@ -15,7 +15,7 @@
             @foreach ($comments as $comment)
                     <p><a  href="/novels/{{ $comment->id }}">{{ $comment->title }}</a>
                         <p>{{ $comment->pivot->comment }}</p>
-                        <form action="/user/{{ $user->id }}/comment/{{ $comment->id }}" method="post">
+                        <form action="{{ route('users.comment.delete', [auth()->id(), $comment->pivot->id]) }}" method="post">
                         @csrf
                         @method('Delete')
                             <input type="hidden" id="comment_id" name="comment_id" value="{{ $comment->id }}" />

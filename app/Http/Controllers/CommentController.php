@@ -20,12 +20,12 @@ class CommentController extends Controller
     }
 
     //コメント削除
-    public function comment_delete(Request $request, $user_id)
+    public function comment_delete(Request $request, $user_id, $comment_id)
     {
         $user = User::findOrFail($user_id);
 
         DB::table('comments')
-            ->where('id', $request->comment_id)
+            ->where('id', $comment_id)
             ->where('user_id', $user->id) // 他人のコメントを勝手に消せないようにガード
             ->delete();
 
