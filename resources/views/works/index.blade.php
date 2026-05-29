@@ -1,8 +1,8 @@
 <h1>小説管理画面</h1>
 <p>resources/views/users/works/index.blade.php</p>
-
+<a href="{{ route('users.mypage', Auth::user()->id) }}" >マイページに戻る</a>
 <div class="actions" style="margin-bottom: 20px;">
-    <a href="{{ route('work.create') }}" class="btn-create">新規小説を作成する</a>
+    <a href="{{ route('work.create') }}" >新規小説を作成する</a>
 </div>
 
 {{-- コントローラーから渡された $works の件数チェック --}}
