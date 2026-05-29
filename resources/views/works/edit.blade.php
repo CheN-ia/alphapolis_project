@@ -1,3 +1,7 @@
+{{-- //layoutsディレクトリからnavメニュー呼び出し --}}
+@extends('layouts.novels-nav')
+@section('content')
+
 <h1>作品情報の編集</h1>
 <p>resources/views/users/works/edit.blade.php</p>
 
@@ -31,3 +35,5 @@
 </form>
 
 <a href="{{ route('work.show', $work->id) }}">戻る</a>
+
+@endsection
