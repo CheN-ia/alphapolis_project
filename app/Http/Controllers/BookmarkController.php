@@ -41,10 +41,18 @@ class BookmarkController extends Controller
         //
         $user = User::findOrFail($user_id);
 
-        // attach() を使って、中間テーブル（bookmarks）に user_id と novel_id の組み合わせを追加
-        $user->bookmarkingNovels()->syncWithoutDetaching([$request->novel_id]);
+        // すでにブックマーク済みかチェック
+        // contains() を使うと中間テーブルにそのIDが存在するか確認できます
+        if ($user->bookmarkingNovels()->where('novel_id', [$request->novel_id])->exists()) {
+            return redirect()->back()
+                ->with('message', 'ブックマーク済み。');
+        }
+
+        // 存在しない場合のみ追加
+        // syncWithoutDetaching でも良いですが、存在チェック後なので attach
+        $user->bookmarkingNovels()->attach([$request->novel_id]);
 
         return redirect()->back()
-        ->with('message', 'ブックマークに追加しました。');
-    }
+            ->with('message', 'ブックマークに追加しました。');
+        }
 }
