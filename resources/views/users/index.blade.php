@@ -1,6 +1,6 @@
 <h1>{{ $user->name }}さんのマイページ</h1>
 <div>
-    <a href="{{ route('novels.index', $user->id) }}">トップページへ</a>
+    <a href="{{ route('novels.index') }}">トップページへ</a>
 </div>
 
 <p>resources/views/users/index.blade.php</p>

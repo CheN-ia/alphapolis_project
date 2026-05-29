@@ -51,7 +51,6 @@ class WorkController extends Controller
     $novel = new Novel();
     $novel->title = $request->input('title');
     $novel->genre_id = $request->input('genre_id');
-    $novel->abstract = ''; // あらすじは一旦空文字
     $novel->save();
 
     // 3. ユーザーと小説の紐づけ（中間テーブル works への保存）
@@ -108,11 +107,7 @@ class WorkController extends Controller
     {
         // 1. 編集対象の作品データを取得
         $work = Novel::findOrFail($id);
-
-        // 2. データの所有者チェック（セキュリティ）
-
-    // ★ 3. ここが重要！ 正しいビューを return していますか？
-    // フォルダ階層が users/works/edit.blade.php なので、ドット区切りで指定します
+        // フォルダ階層が users/works/edit.blade.php なので、ドット区切りで指定します
         return view('works.edit', compact('work'));
 
     }
@@ -122,14 +117,40 @@ class WorkController extends Controller
      */
     public function work_update(Request $request, string $id)
     {
-        $work = Novel::findOrFail($id);
+// 1. 対象の作品を取得
+    $work = Novel::findOrFail($id);
 
-        // ここに更新処理を書く（例）
-        $work->title = $request->title;
-        $work->save();
+    // 2. チェックボックスで残った既存のタグID配列を取得（なければ空配列）
+    $tagIds = $request->input('existing_tags', []);
 
-        // 更新後は詳細画面（show）に戻す
-        return redirect()->route('work.show', $work->id);
+    // 3. 新規入力されたタグ（new_tags）の処理
+    if ($request->filled('new_tags')) {
+        // 全角カンマ・半角カンマ、またはスペースで文字列を分割して配列にする
+        $newTagNames = preg_split('/[,、\s]+/u', $request->input('new_tags'));
+
+        foreach ($newTagNames as $name) {
+            $name = trim($name); // 前後の余計な空白を削除
+            if (empty($name)) continue; // 空文字ならスキップ
+
+            // Tagテーブルを参照。すでにあれば取得、なければ新規登録（重複防止）
+            // ※注意: Tagモデルの $fillable に 'name' の追加が必要です
+            $tag = Tag::firstOrCreate(['tag' => $name]);
+
+            // 今回作品に紐付けるIDリストに、新しく作った（または見つかった）タグのIDを追加
+            $tagIds[] = $tag->id;
+        }
+    }
+
+    // 4. novel_tag（中間テーブル）のデータを一括更新
+    // これにより、外されたチェックは削除され、新しいタグは追加されます
+    $work->tags()->sync($tagIds);
+
+    // 5. 作品自体の情報（タイトルなど）を更新
+    $work->title = $request->title;
+    $work->save();
+
+    // 更新後は詳細画面（show）に戻す
+    return redirect()->route('work.show', $work->id)->with('success', '作品情報を更新しました');
     }
 
     /**

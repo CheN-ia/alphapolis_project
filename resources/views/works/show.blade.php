@@ -5,7 +5,12 @@
 <div>
     <h2>作品情報</h2>
     <p>タイトル: {{ $work->title }}</p>
-    <p>タグ: {{ $work->tag }} あとで修正</p>
+    <p>タグ:
+        {{-- $work->tags で、紐づくすべてのタグがループで回せます --}}
+        @foreach($work->tags as $tag)
+            <span>{{ $tag->tag }}</span>
+        @endforeach
+    </p>
 
     <a href="{{ route('work.edit', $work->id) }}">この作品を編集する</a>
 </div>
