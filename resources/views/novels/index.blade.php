@@ -1,15 +1,12 @@
+{{-- layoutsディレクトリからnavメニュー呼び出し --}}
+@extends('layouts.novels-nav')
+@section('content')
+
 <h1>一覧画面</h1>
 <p>resources/views/users/index.blade.php</p>
 
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-@auth
-    <a href="/user/{{ $user->id }}">ユーザーページ</a>
-@else
-    <a href="{{ route('login.with.redirect') }}">
-        ログイン
-    </a>
-@endauth
 
 <form action="{{ route('novels.index') }}" method="GET" class="search-form">
     <select name="genre_id">
@@ -47,5 +44,7 @@
         @endforeach
     </table>
 @else
-    <p>お問い合わせはありません</p>
+    <p>作品はありません</p>
 @endif
+
+@endsection

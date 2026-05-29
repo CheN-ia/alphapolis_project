@@ -1,3 +1,7 @@
+{{-- layoutsディレクトリからnavメニュー呼び出し --}}
+@extends('layouts.novels-nav')
+@section('content')
+
 <p><a href="{{ route('novels.show', $novel->id) }}">&lt; {{ $novel->title }} の目次に戻る</a></p>
 
 <hr>
@@ -14,3 +18,5 @@
 @endif
     {{ $episode->text }}
 </div>
+
+@endsection

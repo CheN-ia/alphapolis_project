@@ -1,3 +1,7 @@
+{{-- layoutsディレクトリからnavメニュー呼び出し --}}
+@extends('layouts.novels-nav')
+@section('content')
+
 <h1>プロフィール編集画面</h1>
 <p>resources/views/user-setting/edit.blade.php</p>
 <div>
@@ -29,6 +33,8 @@
         <input type="hidden" name="id" value="{{ $user->id }}">
         <div><input type="submit" value="変更の反映"></div>
     </form>
-     <a href="{{ route('users.mypage', ['user_id' => $user->id]) }}">マイページに戻る</a>
+     <a href="{{ route('users.mypage', ['user_id' => $user->id]) }}">ユーザーページに戻る</a>
 
 </div>
+
+@endsection

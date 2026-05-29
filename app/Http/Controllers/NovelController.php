@@ -67,12 +67,8 @@ class NovelController extends Controller
                           ->where('id', $episode_id)
                           ->firstOrFail();
 
-        $comment = Episode::where('novel_id', $novel_id)
-                          ->where('id', $episode_id)
-                          ->firstOrFail();
-
         // 3. ビュー（novels.episode_show）にデータを渡して表示
-        return view('novels.episode_show', compact('novel', 'episode', ''));
+        return view('novels.episode_show', compact('novel', 'episode'));
     }
 
 }

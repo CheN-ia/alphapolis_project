@@ -1,3 +1,7 @@
+{{-- layoutsディレクトリからnavメニュー呼び出し --}}
+@extends('layouts.novels-nav')
+@section('content')
+
 <h1>新規エピソード追加</h1>
 
 <form action="{{ route('work.episode.store', $novel_id) }}" method="POST" enctype="multipart/form-data">
@@ -23,3 +27,6 @@
         <a href="{{ route('work.show', $novel_id) }}">戻る</a>
     </div>
 </form>
+
+
+@endsection

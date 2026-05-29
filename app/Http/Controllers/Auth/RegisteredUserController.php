@@ -46,6 +46,9 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // 変更前：return redirect(route('dashboard', absolute: false));
+
+        // 変更後：意図したURLがあればそこへ、なければdashboardへ
+        return redirect()->intended(route('dashboard', absolute: false));
     }
 }
