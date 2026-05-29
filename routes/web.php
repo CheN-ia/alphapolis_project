@@ -21,15 +21,16 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-// 💡 修正版：元のページのURLを確実に記憶してログイン画面へ飛ばす
+// ログイン画面への遷移
+// 元のページのURLを確実に記憶してログイン画面へ飛ばす
 Route::get('/login-with-redirect', function () {
-    // 1. 直前に見ていたページ（ボタンを押したページ）のURLを取得
+    // 直前に見ていたページ（ボタンを押したページ）のURLを取得
     $previousUrl = url()->previous();
 
-    // 2. Laravelがログイン後に戻る先として認識するセッションキー「url.intended」に保存
+    // Laravelがログイン後に戻る先として認識するセッションキー「url.intended」に保存
     session(['url.intended' => $previousUrl]);
 
-    // 3. ログイン画面へリダイレクト
+    // ログイン画面へリダイレクト
     return redirect()->route('login');
 })->name('login.with.redirect');
 
